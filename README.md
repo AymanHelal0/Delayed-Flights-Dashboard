@@ -37,6 +37,7 @@ The project supports both **Light Mode** and **Dark / Night Mode**, enhancing us
 ## 🛠 Tools & Technologies
 
 * **Data Visualization:** Power BI
+* **Data Modeling:** Star Schema (Fact & Dimension Tables)
 * **Data Source:** CSV files from Kaggle
 * **Design:**
 
@@ -51,6 +52,125 @@ The project supports both **Light Mode** and **Dark / Night Mode**, enhancing us
   * Scatter Plots
   * Pie Charts
   * Interactive Slicers
+
+---
+
+## 🧩 Data Model (Star Schema)
+
+The project uses a **Star Schema data model** to ensure optimal performance, clean relationships, and scalable analytics within Power BI.
+
+### ⭐ Fact Table – Fact_Flights
+
+The central table that stores **flight-level transactional data** and all measurable metrics:
+
+* DepDelay (Departure Delay)
+* ArrDelay (Arrival Delay)
+* AirTime
+* ActualElapsedTime
+* Cancelled Flag
+* Diverted Flag
+* Flight Status (Delayed / On-Time / Early)
+* Delay Components:
+
+  * CarrierDelay
+  * WeatherDelay
+  * NASDelay
+  * SecurityDelay
+  * LateAircraftDelay
+
+**Foreign Keys:**
+
+* Date_Key
+* Carrier_Key
+* Route_Key
+* Cancellation_Key
+
+This table acts as the **single source of truth** for all KPIs and calculations.
+
+---
+
+### ⭐ Dimension Tables
+
+#### 📅 Date_Dim
+
+Provides full time intelligence support:
+
+* Date
+* Day
+* Month
+* Month Name
+* Quarter
+* Year
+
+Used for time-based analysis, trends, and seasonality.
+
+---
+
+#### ✈️ Airport_Dim
+
+Contains route and distance attributes:
+
+* Origin Airport
+* Destination Airport
+* Route
+* Distance
+
+Used for origin-based delay analysis and distance insights.
+
+---
+
+#### 🏢 Carrier_Dim
+
+Contains airline reference data:
+
+* Airline Name
+* Unique Carrier Code
+
+Used for airline performance and delay comparison.
+
+---
+
+#### ❌ Cancellation_Dim
+
+Lookup table for cancellation details:
+
+* Cancellation Code
+* Cancellation Reason
+
+Used for cancellation analysis and operational insights.
+
+---
+
+### 🔗 Relationships
+
+* One-to-Many relationships from **Dimension Tables → Fact_Flights**
+* Single-directional filtering to avoid ambiguity
+* Optimized for accurate aggregations and performance
+
+---
+
+### 📐 DAX Measures Layer
+
+A dedicated **DAX Measures table** is used to centralize business logic:
+
+* Total Flights
+* Delayed Flights
+* On-Time Flights
+* Early Flights
+* Average Delay (Minutes)
+
+This approach improves model readability, reusability, and maintenance.
+
+---
+
+### ✅ Why Star Schema?
+
+* Faster query performance
+* Cleaner relationships
+* Simpler and more readable DAX
+* Industry-standard BI modeling approach
+
+---
 
 ---
 
@@ -174,4 +294,3 @@ Both modes maintain identical insights and functionality.
 ---
 
 ⭐ If you find this project useful, feel free to star the repository!
-
